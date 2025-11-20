@@ -1,0 +1,32 @@
+<tr>
+    <td class="fw-bold">{{ task.titulo }}</td> 
+    <td>{{ task.fecha }}</td>
+    <td>
+        {% if task.estado == 'pendiente' %}
+            <span class="badge bg-danger text-dark">Pendiente</span>
+        {% elif task.estado == 'en_progreso' %}
+            <span class="badge bg-warning text-dark">En Progreso</span>
+        {% elif task.estado == 'completada' %}
+            <span class="badge bg-success">Completada</span>
+        {% else %}
+            <span class="badge bg-secondary">{{ task.estado }}</span>
+        {% endif %}
+    </td>
+    
+    <!-- ver, editar y borrar -->
+    <td>
+        <div class="btn-group" role="group">
+            <a href="/detail/{{ task.id }}" class="btn btn-sm btn-outline-dark" title="Ver Detalle">
+                <img src="https://cdn-icons-png.flaticon.com/128/7130/7130945.png" alt="Ver Detalle" width="20" height="20">
+            </a>
+            
+            <a href="/edit/{{ task.id }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                <img src="https://cdn-icons-png.flaticon.com/128/2842/2842191.png" alt="Editar" width="20" height="20">
+            </a>
+            
+            <a href="/delete/{{ task.id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de borrar esta tarea?')" title="Borrar">
+                <img src="https://cdn-icons-png.flaticon.com/128/5582/5582899.png" alt="Borrar" width="20" height="20">
+            </a>
+        </div>
+    </td>
+</tr>

@@ -1,0 +1,45 @@
+<form action="{% if task %}/edit/{{ task.id }}{% else %}/add{% endif %}" method="POST" class="row g-3 align-items-end"> <!-- a donde enviar los datos-->
+    
+    <div class="col-md-6">
+        <label for="titulo" class="form-label">Título de la tarea</label>
+        <input type="text" class="form-control" name="titulo" id="titulo" 
+               placeholder="Ej: Estudiar Python" 
+               value="{{ task.titulo if task else '' }}" required>
+    </div>
+
+    <div class="col-md-3">
+        <label for="fecha" class="form-label">Fecha Vencimiento</label>
+        <input type="date" class="form-control" name="fecha" id="fecha" 
+               value="{{ task.fecha if task else '' }}" required>
+    </div>
+
+
+    {% if task %} <!-- si se edita -->
+    <div class="col-md-12 mt-3">
+        <label class="form-label fw-bold">Estado Actual:</label>
+        <select name="estado" class="form-select border-warning">
+            <option value="pendiente" {% if task.estado == 'pendiente' %}selected{% endif %}>
+                🔴 Pendiente
+            </option>
+            <option value="en_progreso" {% if task.estado == 'en_progreso' %}selected{% endif %}>
+                🟡 En Progreso
+            </option>
+            <option value="completada" {% if task.estado == 'completada' %}selected{% endif %}>
+                🟢 Completada
+            </option>
+        </select>
+    </div>
+    {% endif %}
+
+    <div class="col-md-3 {{ 'mt-3' if task else '' }}">
+        <button type="submit" class="btn w-100" style="background-color: #4be2c9; border-color: #4be2c9; color: black;">
+            {{ 'Guardar' if task else '+ Agregar' }}
+        </button>
+    </div>
+
+    {% if task %}
+    <div class="col-md-3 mt-3">
+        <a href="/" class="btn btn-secondary w-100">Cancelar</a>
+    </div>
+    {% endif %}
+</form>

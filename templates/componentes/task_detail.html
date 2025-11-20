@@ -1,0 +1,27 @@
+<div class="card shadow-lg border-secondary">
+    <div class="card-header text-black d-flex justify-content-between" style="background-color: #4be2c9";>
+        <span><h5><strong>Detalle Tarea</strong></h5></span>
+        <a href="/" class="btn btn-sm btn-light"><img src="https://cdn-icons-png.flaticon.com/128/2550/2550327.png" alt="Cerrar" width="20" height="20">
+         Cerrar</a>
+    </div>
+    <div class="card-body">
+        <h2 class="card-title">{{ detail.titulo }}</h2>
+        <p class="text-muted">Vence el: {{ detail.fecha }}</p>
+        
+        <hr>
+        
+        <h5>Estado:</h5>
+        {% if detail.estado == 'pendiente' %}
+            <div class="alert alert-danger">Pendiente</div>
+        {% elif detail.estado == 'en_progreso' %}
+            <div class="alert alert-warning">En Progreso</div>
+        {% elif detail.estado == 'completada' %}
+            <div class="alert alert-success">Completada</div>
+        {% endif %}
+        
+        <div class="mt-4 d-flex gap-2">
+            <a href="/" class="btn btn-secondary">Volver</a>
+            <a href="/edit/{{ detail.id }}" class="btn" style="background-color: #4be2c9";>Editar esta tarea</a>
+        </div>
+    </div>
+</div>
