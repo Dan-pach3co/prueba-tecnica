@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 app = Flask(__name__)
+app.secret_key = "RaeAlert" 
 
 #lista diccionario predeterminada 
 tasks = [
@@ -22,9 +23,7 @@ next_id = 4
 
 @app.route("/")
 def task_list():
-    # Obtenemos el filtro de la URL (ej: /?estado=pendiente)
     filtro = request.args.get('estado')
-    
     if filtro and filtro != 'todas':
         tareas_filtradas = [t for t in tasks if t["estado"] == filtro] #filtra por estado seleccionado si no son todos
     else:
@@ -47,14 +46,15 @@ def add_task():
         }
         tasks.append(nueva_tarea)
         next_id += 1
-        
+        flash("¡Tarea creada exitosamente!", "success")
     return redirect("/")
+
 
 @app.route("/delete/<int:task_id>")
 def delete_task(task_id):
     global tasks
-    # Recreamos la lista excluyendo la tarea que queremos borrar
-    tasks = [task for task in tasks if task["id"] != task_id]
+    tasks = [task for task in tasks if task["id"] != task_id] #reescribe la lista
+    flash("Tarea eliminada correctamente.", "danger")
     return redirect("/")
 
 
@@ -78,7 +78,7 @@ def edit_task(task_id):
 def view_detail(task_id):
     tarea = next((t for t in tasks if t["id"] == task_id), None)
     
-    # Si no existe la tarea, volvemos al inicio normal
+    # Si no existe la tarea vuelve al inicio normal
     if not tarea:
         return redirect("/")
     return render_template("index.html", detail=tarea, tasks=tasks)

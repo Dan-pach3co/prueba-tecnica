@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/9513/9513435.png">
     <title>Gestor de Tareas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
-<body class="bg-light">
+
+<body style="background-color: rgb(236, 250, 255);">
+{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="notification-bar bg-{{ category }} text-white text-center py-2 shadow fw-bold">
+                    {% if category == 'success' %} <img src="https://cdn-icons-png.flaticon.com/128/9720/9720724.png" alt="Agregado" width="20" height="20"> {% else %} <img src="https://cdn-icons-png.flaticon.com/128/1828/1828595.png" alt="Borrado" width="20" height="20"> {% endif %}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
 
     <div class="container mt-5 pb-5">
         <div class="text-center mb-4">
-            <h1><img src="https://cdn-icons-png.flaticon.com/128/12247/12247329.png" alt="Ver Detalle" width="50" height="50"> Mis Tareas</h1>
+            <h1><img src="https://cdn-icons-png.flaticon.com/128/12247/12247329.png" alt="Ver Detalle" width="50" height="50"><strong>Mis Tareas</strong></h1>
             <p class="text-muted">Sistema de Gestión</p>
         </div>
- 
+
         {% if detail %}
             <!-- detalles de una tarea -->
             <div class="row justify-content-center fade-in">
@@ -77,5 +92,48 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    tbody tr {
+        transition: all 0.2s;
+    }
+    tbody tr:hover {
+        background-color: #f8f9fa; /* Gris muy clarito */
+        transform: scale(1.01); /* Crece un poquitito */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra suave */
+        z-index: 10;
+        position: relative;
+    }
+
+    /* Bordes más redondeados en las tarjetas */
+    .card {
+        border-radius: 15px;
+        border: none; 
+    }
+    
+    .btn {
+        border-radius: 10px;
+    }
+
+    .notification-bar {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; 
+    animation: slideDownUp 4s forwards; 
+}
+/* notificacion al agregar y eliminar una tarea*/
+@keyframes slideDownUp {
+    0% { top: -50px; }
+    10% { top: 0; }
+    80% { top: 0; }
+    100% { top: -50px; }
+}
+</style>
 </body>
 </html>
